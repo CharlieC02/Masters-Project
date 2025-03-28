@@ -1,0 +1,21 @@
+
+tail -n+3 $1 > temp1
+
+
+awk '{print $1}' temp1 > atoms
+
+awk '{print $2, $3, $4}' temp1 > positions
+
+long=$(wc -l temp1 | awk '{print $1}')
+
+
+for i in $(seq 1 1 $long);
+do
+echo "atom" >> atom
+done
+
+paste atom positions atoms > geometry.in
+
+rm temp1 atoms positions atom
+
+sed -i "s/\r//g" geometry.in
